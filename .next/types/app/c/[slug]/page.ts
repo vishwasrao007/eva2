@@ -1,4 +1,4 @@
-// File: /Users/nileshvishwasrao/Nilesh/elevenlabs-test/test2/app/c/[slug]/page.tsx
+// File: /Users/nileshvishwasrao/Nilesh/elevenlabs-test/evaui/eva2/app/c/[slug]/page.tsx
 import * as entry from '../../../../../app/c/[slug]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

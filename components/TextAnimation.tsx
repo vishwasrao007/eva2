@@ -15,90 +15,95 @@ interface Props {
 
 export default function AiTalkingAnimation({ onStartListening, onStopListening, isAudioPlaying, currentText }: Props) {
   const [aiState, setAiState] = useState<AIState>('idle')
-  const animatedCurrentText = useTypingEffect(currentText, 20)
+  const animatedCurrentText = useTypingEffect(currentText && currentText.trim().length > 0 ? currentText : 'Hi Good Morning! How may I help you?', 20)
   const displayedText = useTypingEffect('Click the circle to start the conversation', 20)
 
   const handleCircleClick = () => {
     if (aiState === 'listening' || aiState === 'speaking') {
       onStopListening?.()
-      setAiState('idle')
     } else if (!isAudioPlaying) {
       onStartListening?.()
-      setAiState('listening')
     }
   }
 
   useEffect(() => {
     if (isAudioPlaying) setAiState('speaking')
     else if (aiState === 'speaking' && currentText) setAiState('listening')
-  }, [isAudioPlaying])
+    else setAiState('idle')
+  }, [isAudioPlaying, currentText])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="relative mb-8 cursor-pointer" onClick={handleCircleClick} role="button" aria-label={aiState === 'listening' ? 'Stop listening' : 'Start listening'}>
-        <motion.div
-          className="w-40 h-40 rounded-full overflow-hidden flex items-center justify-center"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <img
-            src={aiState === 'listening' ? '/listening.gif' : aiState === 'speaking' ? '/listening.gif' : '/listening.gif'}
-            alt={aiState === 'listening' ? 'AI is listening' : aiState === 'speaking' ? 'AI is speaking' : 'AI is idle'}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+    <div className="relative flex flex-col items-center justify-between mx-auto my-4 bg-gradient-to-b from-[#5B7FFF] to-[#AEE2FF] rounded-[32px] shadow-xl" style={{ width: 360, height: 800, minHeight: 800, minWidth: 360 }}>
+      <div className="absolute top-5 right-2.5">
+        <img src="/close.svg" alt="Close" className="h-8" />
       </div>
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <p className="text-gray-800 text-lg font-mono" aria-live="polite">
-          {aiState === 'listening' ? 'Listening...' : aiState === 'speaking' ? animatedCurrentText : displayedText}
-        </p>
-        {aiState === 'idle' && (
-          <motion.div
-            animate={{
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 0.8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="h-5 w-2 bg-violet-600 mt-2"
-          />
-        )}
+      {/* Top Section */}
+      <div className="flex flex-col items-center w-full pt-[3.2rem]">
+        <span className="text-white text-base font-medium mb-2">Welcome to HDFC Bank!</span>
+        <span className="text-[52px] font-extrabold text-white leading-none mb-1" style={{ letterSpacing: '-2px' }}>
+          <span className="text-[#AEE2FF]">I'm EVA</span>
+        </span>
+        <span className="text-white text-xl font-medium">Your all new AI Assistant</span>
+        <div className="relative flex items-center justify-center">
+          <div className="rounded-full p-2" onClick={handleCircleClick}>
+            <img
+              src={aiState === 'listening' ? '/eva.svg' : aiState === 'speaking' ? '/eva.svg' : '/eva.svg'}
+              alt={aiState === 'listening' ? 'AI is listening' : aiState === 'speaking' ? 'AI is speaking' : 'AI is idle'}
+              className="w-[300px] h-[300px] rounded-full object-cover"
+            />
+          </div>
+        </div>
+        {/* Animated Eva's voice text replaces greeting/help text below Eva image */}
+        <div className="flex flex-col items-center w-4/5 mx-auto text-center">
+          {animatedCurrentText.split(/(?<=[.?!])\s+/).map((sentence, idx) =>
+            sentence.trim().endsWith('?') ? (
+              <span key={idx} className="block text-2xl font-bold text-white">{sentence}</span>
+            ) : (
+              <span key={idx} className="block text-base font-normal text-white">{sentence}</span>
+            )
+          )}
+        </div>
       </div>
-      <div className="flex gap-4 mt-4">
-        <button
-          onClick={() => {
-            if (!isAudioPlaying) {
-              onStartListening?.()
-              setAiState('listening')
-            }
-          }}
-          disabled={aiState === 'listening' || aiState === 'speaking'}
-          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-            aiState === 'listening' || aiState === 'speaking'
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-pink-500 to-violet-600 text-white hover:from-pink-600 hover:to-violet-700'
-          }`}
-        >
-          Start
-        </button>
-        <button
-          onClick={() => {
-            if (aiState === 'listening' || aiState === 'speaking') {
-              onStopListening?.()
-              setAiState('idle')
-            }
-          }}
-          disabled={aiState === 'idle'}
-          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-            aiState === 'idle'
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-red-500 to-pink-600 text-white hover:from-red-600 hover:to-pink-700'
-          }`}
-        >
-          End
-        </button>
+      {/* Bottom Listening Box */}
+      <div className="w-full px-2 pb-2 pt-2">
+        <div className="bg-white rounded-[32px] shadow-lg flex flex-col items-center justify-center w-full min-h-[180px] h-[180px] p-2">
+          <div className="flex items-center gap-2 mb-1">
+            {aiState === 'listening' && <span className="text-[#5B7FFF] font-semibold text-lg">Listening...</span>}
+          </div>
+          {/* Start and End Buttons moved inside white box */}
+          <div className="flex flex-col justify-center mt-auto w-full">
+            <div className="flex-1 flex justify-center">
+              <img
+                src="/btn.gif"
+                alt="Start"
+                width={100}
+                height={100}
+                className={`cursor-pointer ${aiState === 'listening' || aiState === 'speaking' ? 'opacity-50 pointer-events-none' : ''}`}
+                onClick={() => {
+                  if (!isAudioPlaying) {
+                    onStartListening?.()
+                    setAiState('listening')
+                  }
+                }}
+              />
+            </div>
+            <div className="flex-1 flex justify-end pr-[6px] pb-[6px]">
+              <img
+                src="/end-call.svg"
+                alt="End"
+                width={30}
+                height={30}
+                className={`cursor-pointer ${aiState === 'idle' ? 'opacity-50 pointer-events-none' : ''}`}
+                onClick={() => {
+                  if (aiState === 'listening' || aiState === 'speaking') {
+                    onStopListening?.()
+                    setAiState('idle')
+                  }
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
