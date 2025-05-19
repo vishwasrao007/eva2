@@ -43,6 +43,9 @@ export const metadata: Metadata = {
 export default function ({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/hdfc-logo.png" type="image/png" />
+      </head>
       <body className={`${interFont.className} ${plusJakartaSans.className} antialiased`}>
         <Toaster />
         {children}
