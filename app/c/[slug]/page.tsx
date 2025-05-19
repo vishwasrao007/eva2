@@ -84,11 +84,11 @@ export default function () {
   }, [slug])
   return (
     <>
-      <div className="fixed top-2 left-2 flex flex-row gap-x-2 items-center">
+      {/* <div className="fixed top-2 left-2 flex flex-row gap-x-2 items-center">
         <a href="index.html" target="_blank">
           <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" width="158" height="48" className="h-[30px] w-auto" alt="HDFC Bank Logo" />
         </a>
-      </div>
+      </div> */}
       <TextAnimation currentText={currentText} isAudioPlaying={conversation.isSpeaking} onStopListening={handleStopListening} onStartListening={handleStartListening} />
     </>
   )

@@ -33,7 +33,7 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
   }, [isAudioPlaying, currentText])
 
   return (
-    <div className="relative flex flex-col items-center justify-between mx-auto my-4 bg-gradient-to-b from-[#5B7FFF] to-[#AEE2FF] rounded-[32px] shadow-xl" style={{ width: 360, height: 800, minHeight: 800, minWidth: 360 }}>
+    <div className="relative flex flex-col items-center justify-between bg-gradient-to-b from-[#5B7FFF] to-[#AEE2FF] shadow-xl h-[100vh]" style={{ minHeight: '100vh' }}>
       <div className="absolute top-5 right-2.5">
         <img src="/close.svg" alt="Close" className="h-8" />
       </div>
@@ -66,7 +66,7 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
       </div>
       {/* Bottom Listening Box */}
       <div className="w-full px-2 pb-2 pt-2">
-        <div className="bg-white rounded-[32px] shadow-lg flex flex-col items-center justify-center w-full min-h-[180px] h-[180px] p-2">
+        <div className="bg-white rounded-[32px] flex flex-col items-center justify-center w-full min-h-[180px] h-[180px] p-2">
           <div className="flex items-center gap-2 mb-1">
             {aiState === 'listening' && <span className="text-[#5B7FFF] font-semibold text-lg">Listening...</span>}
           </div>
