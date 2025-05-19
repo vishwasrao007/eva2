@@ -14,13 +14,14 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 })
 
 const config = {
-  url: 'https://ai-pulse.vercel.app',
-  title: 'Im Eva',
+  url: 'https://www.hdfcbank.com/',
+  title: 'HDFC Bank Eva',
   description: 'HDFC Bank AI assistant Eva',
 }
 
 const btoa = (str: string) => Buffer.from(str).toString('base64')
-const images = `https://neon.tech/docs/og?title=${btoa('Pulse')}&breadcrumb=${btoa(config.title)}`
+const images = `https://www.hdfcbank.com/images/hdfc-bank-logo.png`
+// const images = `https://neon.tech/docs/og?title=${btoa('Pulse')}&breadcrumb=${btoa(config.title)}`
 
 export const metadata: Metadata = {
   title: config.title,
