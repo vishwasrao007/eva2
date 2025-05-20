@@ -32,6 +32,10 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
     else setAiState('idle')
   }, [isAudioPlaying, currentText])
 
+  // Determine Eva image size based on animatedCurrentText line count
+  const evaLines = animatedCurrentText.split(/(?<=[.?!])\s+/)
+  const evaImgSize = evaLines.length > 3 ? 200 : 300
+
   return (
     <div className="relative flex flex-col items-center justify-between bg-gradient-to-b from-[#5B7FFF] to-[#AEE2FF] shadow-xl h-[100vh]" style={{ minHeight: '100vh' }}>
       <div className="absolute top-5 right-2.5">
@@ -45,11 +49,16 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
         </span>
         <span className="text-white text-xl font-medium">Your all new AI Assistant</span>
         <div className="relative flex items-center justify-center">
-          <div className="rounded-full p-2" onClick={handleCircleClick}>
+          <div
+            className="rounded-full p-2"
+            onClick={handleCircleClick}
+            style={{ width: evaImgSize, height: evaImgSize }}
+          >
             <img
               src={aiState === 'listening' ? '/eva.gif' : aiState === 'speaking' ? '/eva.gif' : '/eva.gif'}
               alt={aiState === 'listening' ? 'AI is listening' : aiState === 'speaking' ? 'AI is speaking' : 'AI is idle'}
-              className="w-[300px] h-[300px] rounded-full object-cover"
+              style={{ width: evaImgSize, height: evaImgSize }}
+              className="rounded-full object-cover"
             />
           </div>
         </div>
