@@ -76,6 +76,7 @@ export default function () {
   }
   const handleStopListening = () => {
     if (conversation.status === 'connected') disconnectConversation()
+    setCurrentText('')
   }
   useEffect(() => {
     return () => {
