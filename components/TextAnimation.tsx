@@ -32,10 +32,6 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
     else setAiState('idle')
   }, [isAudioPlaying, currentText])
 
-  // Determine Eva image size based on animatedCurrentText line count
-  const evaLines = animatedCurrentText.split(/(?<=[.?!])\s+/)
-  const evaImgSize = evaLines.length > 3 ? 200 : 300
-
   return (
     <div className="relative flex flex-col items-center justify-between shadow-xl h-[100vh] overflow-hidden" style={{ minHeight: '100vh' }}>
      
@@ -64,25 +60,28 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
             <div
               className="rounded-full p-2"
               onClick={handleCircleClick}
-              style={{ width: evaImgSize, height: evaImgSize }}
+              style={{ width: 300, height: 300 }}
             >
               <img
-                src={aiState === 'listening' ? '/eva.svg' : aiState === 'speaking' ? '/eva.svg' : '/eva.svg'}
+                src={aiState === 'listening' ? '/eva.gif' : aiState === 'speaking' ? '/eva.gif' : '/eva.gif'}
                 alt={aiState === 'listening' ? 'AI is listening' : aiState === 'speaking' ? 'AI is speaking' : 'AI is idle'}
-                style={{ width: evaImgSize, height: evaImgSize, opacity: 0 }}
+                style={{ width: 300, height: 300, opacity: 0 }}
                 className="rounded-full object-cover"
               />
             </div>
           </div>
           {/* Animated Eva's voice text replaces greeting/help text below Eva image */}
           <div className="flex flex-col items-center w-4/5 mx-auto text-center">
-            {animatedCurrentText.split(/(?<=[.?!])\s+/).map((sentence, idx) =>
-              sentence.trim().endsWith('?') ? (
+            {animatedCurrentText.split(/(?<=[.?!])\s+/).map((sentence, idx) => {
+              const lower = sentence.toLowerCase();
+              const isQuestion = sentence.trim().endsWith('?');
+              const isPrompt = lower.includes('please enter') || lower.includes('kindly provide');
+              return (isQuestion || isPrompt) ? (
                 <span key={idx} className="block text-2xl font-bold text-white">{sentence}</span>
               ) : (
                 <span key={idx} className="block text-base font-normal text-white">{sentence}</span>
-              )
-            )}
+              );
+            })}
           </div>
         </div>
         {/* Bottom Listening Box */}
