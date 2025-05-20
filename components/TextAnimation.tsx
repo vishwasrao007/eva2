@@ -47,7 +47,7 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
         <div className="relative flex items-center justify-center">
           <div className="rounded-full p-2" onClick={handleCircleClick}>
             <img
-              src={aiState === 'listening' ? '/eva.svg' : aiState === 'speaking' ? '/eva.svg' : '/eva.svg'}
+              src={aiState === 'listening' ? '/eva.gif' : aiState === 'speaking' ? '/eva.gif' : '/eva.gif'}
               alt={aiState === 'listening' ? 'AI is listening' : aiState === 'speaking' ? 'AI is speaking' : 'AI is idle'}
               className="w-[300px] h-[300px] rounded-full object-cover"
             />
@@ -74,7 +74,13 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
           <div className="flex flex-col justify-center mt-auto w-full">
             <div className="flex-1 flex justify-center">
               <img
-                src="/btn.gif"
+                src={
+                  aiState === 'listening'
+                    ? '/blob-listening.gif'
+                    : aiState === 'speaking'
+                    ? '/blob-answering.gif'
+                    : '/blob-static.gif'
+                }
                 alt="Start"
                 width={100}
                 height={100}
