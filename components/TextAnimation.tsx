@@ -43,8 +43,8 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
       </div>
       {/* Top Section */}
       <div className="flex flex-col items-center w-full pt-[3.2rem]">
-        <span className="text-white text-base font-medium mb-2">Welcome to HDFC Bank!</span>
-        <span className="text-[52px] font-extrabold text-white leading-none mb-1" style={{ letterSpacing: '-2px' }}>
+        <span className="text-white text-base font-medium">Welcome to HDFC Bank!</span>
+        <span className="text-[52px] font-extrabold text-white leading-none">
           <span className="text-[#AEE2FF]">I'm EVA</span>
         </span>
         <span className="text-white text-xl font-medium">Your all new AI Assistant</span>
@@ -93,7 +93,7 @@ export default function AiTalkingAnimation({ onStartListening, onStopListening, 
                 alt="Start"
                 width={100}
                 height={100}
-                className={`cursor-pointer ${aiState === 'listening' || aiState === 'speaking' ? 'opacity-50 pointer-events-none' : ''}`}
+                className={`cursor-pointer ${aiState === 'listening' || aiState === 'speaking' ? 'pointer-events-none' : ''}`}
                 onClick={() => {
                   if (!isAudioPlaying) {
                     onStartListening?.()
